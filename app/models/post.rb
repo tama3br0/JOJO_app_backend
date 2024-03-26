@@ -5,4 +5,6 @@ class Post < ApplicationRecord
         "uploads/images/#{image}"
     end
 
+    has_many :comments, dependent: :destroy # 関連するコメントも削除する
+
 end

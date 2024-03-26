@@ -35,13 +35,13 @@ class Api::PostsController < ApplicationController
     # DELETE api/posts/:id
     def destroy
         post = Post.find(params[:id])
-        image = post.image
-        data = Post.where(image: image.url)
+        # image = post.image
+        # data = Post.where(image: image.url)
         # 画像のデータを条件に合わせて消す
-        if data.count < 2
-            # 画像データを消す処理
-            FileUtils.rm("#{Rails.root}/public#{post.image.url}") if post.image.present?
-        end
+        # if data.count < 2
+        #     # 画像データを消す処理
+        #     FileUtils.rm("#{Rails.root}/public#{post.image.url}") if post.image.present?
+        # end
         post.destroy
         render json: { message: 'Post deleted successfully' }, status: :ok
     end
