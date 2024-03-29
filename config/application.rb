@@ -40,5 +40,8 @@ module JojoBackend
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
+
+    # JWT のシークレットキーを環境変数から取得
+    config.jwt_secret_key = ENV['JWT_SECRET_KEY']
   end
 end
