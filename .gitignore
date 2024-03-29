@@ -34,3 +34,4 @@
 
 # GitHubに写真をプッシュしないように追記
 /public/uploads
+/public/icons

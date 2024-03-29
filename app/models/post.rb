@@ -7,5 +7,4 @@ class Post < ApplicationRecord
     end
 
     has_many :comments, dependent: :destroy # 関連するコメントも削除する
-
 end

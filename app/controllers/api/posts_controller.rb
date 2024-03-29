@@ -1,4 +1,6 @@
 class Api::PostsController < ApplicationController
+    before_action :authenticate_user, only: [:create, :update, :destroy]
+    before_action :set_post, only: [:show, :update, :destroy]
 
     # GET /api/posts
     def index
@@ -8,13 +10,13 @@ class Api::PostsController < ApplicationController
 
     # GET /api/posts/:id
     def show
-        post = Post.find(params[:id])
-        render json: post.as_json.merge(created_at: post.created_at.strftime('%B %d, %Y'))
+        render json: @post.as_json.merge(created_at: post.created_at.strftime('%B %d, %Y'))
     end
 
     # POST /api/posts
     def create
-        post = Post.new(post_params)
+        # current_userがhas_manyしているpostsのこと => postsテーブルのこと
+        post = current_user.posts.new(post_params)
         if post.save
             render json: post, status: :created
         else
@@ -24,29 +26,29 @@ class Api::PostsController < ApplicationController
 
     # PUT/PATCH api/posts/:id
     def update
-        post = Post.find(params[:id])
-        if post.update(post_params)
-            render json: post
+        # Postモデルがbelongs_toしているuserのこと
+        if @post.user == current_user && @post.update(post_params)
+            render json: @post
         else
-            render json: { errors: post.errors.full_messages }, status: :unprocessable_entity
+            render json: { errors: @post.errors.full_messages }, status: :unprocessable_entity
         end
     end
 
     # DELETE api/posts/:id
     def destroy
-        post = Post.find(params[:id])
-        # image = post.image
-        # data = Post.where(image: image.url)
-        # 画像のデータを条件に合わせて消す
-        # if data.count < 2
-        #     # 画像データを消す処理
-        #     FileUtils.rm("#{Rails.root}/public#{post.image.url}") if post.image.present?
-        # end
-        post.destroy
-        render json: { message: 'Post deleted successfully' }, status: :ok
+        if @post.user == current_user
+            @post.destroy
+            render json: { message: '削除できました' }, status: :ok
+        else
+            render json: { error: 'あなたにはこの投稿を削除する権限がありません' }, status: :unprocessable_entity
+        end
     end
 
     private
+
+    def set_post
+        @post = Post.find(params[:id])
+    end
 
     def post_params
         params.require(:post).permit(:title, :image)

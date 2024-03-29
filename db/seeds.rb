@@ -9,17 +9,17 @@
 #   end
 # サンプルユーザーの作成
 User.create!(
-    name: 'John Doe',
-    email: 'john@example.com',
+    name: 'Jonathan Joestar',
+    email: 'jonathan@joestar.com',
     password: 'password',
-    icon: 'user1.jpg'
+    icon: 'icons/01.png'
 )
 
 User.create!(
-    name: 'Jane Smith',
-    email: 'jane@example.com',
+    name: 'Joseph Joestar',
+    email: 'joseph@joestar.com',
     password: 'password',
-    icon: 'user2.jpg'
+    icon: 'icons/02.png'
 )
 
 # 他のサンプルデータを追加する場合はここに追加してください

@@ -2,14 +2,14 @@ class Api::AuthController < ApplicationController
   def login
     user = User.find_by(email: params[:email])
 
-    Rails.logger.debug("Received login request for email: #{params[:email]}")
+    Rails.logger.debug("ログインの時に使用したメールアドレス: #{params[:email]}")
 
     # ユーザーが存在し、かつパスワードが正しい時
     if user && user.authenticate(params[:password])
         token = generate_jwt_token(user)
         render json: { token: token }
     else
-        render json: { error: 'Invalid email or passeord' }, status: :unprocessable_entity
+        render json: { error: 'メールアドレスまたはパスワードが違います' }, status: :unprocessable_entity
     end
   end
 
