@@ -1,9 +1,9 @@
 class Post < ApplicationRecord
-    belongs_to :user
     mount_uploader :image, ImageUploader
+    belongs_to :user
 
     def image_url
-        "uploads/images/#{image}"
+        image.url if image.present?
     end
 
     has_many :comments, dependent: :destroy # 関連するコメントも削除する
