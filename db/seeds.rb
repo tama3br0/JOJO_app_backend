@@ -12,14 +12,21 @@ User.create!(
     name: 'John Doe',
     email: 'john@example.com',
     password: 'password',
-    icon: 'user1.jpg'
+    icon: 'https://jojo-portal.com/special/digital-contents/assets/images/common/icon_golden-wind.png'
 )
 
 User.create!(
     name: 'Jane Smith',
     email: 'jane@example.com',
     password: 'password',
-    icon: 'user2.jpg'
+    icon: '/Users/rem/IdeaProjects/prof_app/frontend/public/images/01.png'
 )
 
 # 他のサンプルデータを追加する場合はここに追加してください
+
+User.create(
+    name: 'Jo',
+    email: 'jo@example.com',
+    password: 'password',
+    icon: 'https://jojo-portal.com/special/digital-contents/assets/images/common/icon_golden-wind.png'
+)
