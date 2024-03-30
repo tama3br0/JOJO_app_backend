@@ -16,6 +16,10 @@ class Api::CommentsController < ApplicationController
 
     # POST /api/posts/:post_id/comments
     def create
+        puts request.raw_post
+
+        puts params.inspect
+
         @comment = @post.comments.new(comment_params.merge(user_id: current_user.id))
 
         if @comment.save
@@ -55,6 +59,6 @@ class Api::CommentsController < ApplicationController
     end
 
     def comment_params
-        params.require(:comment).permit(:content, :author_name)
+        params.require(:comment).permit(:content, :author_name, :post_id)
     end
 end
