@@ -42,4 +42,11 @@ class ApplicationController < ActionController::API
         user_id = decoded_token.first['user_id']
         @current_user = User.find_by(id: user_id)
     end
+
+      # 認証メソッド(posts_controller.rbで使用)
+    def authenticate_user
+        unless current_user
+            render json: { error: 'ログインする必要があります' }, status: :unauthorized
+        end
+    end
 end

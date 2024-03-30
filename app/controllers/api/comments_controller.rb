@@ -1,4 +1,5 @@
 class Api::CommentsController < ApplicationController
+    before_action :authenticate_user, only: [:create, :update, :destroy]
     before_action :set_post
     before_action :set_comment, only: [:show, :update, :destroy]
 
@@ -15,7 +16,7 @@ class Api::CommentsController < ApplicationController
 
     # POST /api/posts/:post_id/comments
     def create
-        @comment = @post.comments.new(comment_params)
+        @comment = @post.comments.new(comment_params.merge(user_id: current_user.id))
 
         if @comment.save
             render json: @comment, status: :created
@@ -26,17 +27,21 @@ class Api::CommentsController < ApplicationController
 
     # PUT /api/posts/:post_id/comments/:id
     def update
-        if @comment.update(comment_params)
+        if @comment.user == current_user && @comment.update(comment_params)
             render json: @comment
         else
-            render json: @comment.errors, status: :unprocessable_entity
+            render json: { error: 'あなたには編集する権限がありません' }, status: :unprocessable_entity
         end
     end
 
     # DELETE /api/posts/:post_id/comments/:id
     def destroy
-        @comment.destroy
-        head :no_content
+        if @comment.user == current_user
+            @comment.destroy
+            head :no_content
+        else
+            render json: { error: 'あなたには削除する権限がありません' }, status: :unprocessable_entity
+        end
     end
 
     private

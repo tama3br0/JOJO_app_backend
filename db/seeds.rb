@@ -9,17 +9,20 @@
 #   end
 # サンプルユーザーの作成
 User.create!(
-    name: 'John Doe',
-    email: 'john@example.com',
+    name: 'Jonathan Joestar',
+    email: 'jonathan@joestar.com',
     password: 'password',
+<<<<<<< HEAD
     icon: 'https://jojo-portal.com/special/digital-contents/assets/images/common/icon_golden-wind.png'
+=======
+    icon: 'icons/01.png'
+>>>>>>> 3c064c74dbd7bccfce4c1b57c1c6a418048f72ad
 )
 
 User.create!(
-    name: 'Jane Smith',
-    email: 'jane@example.com',
+    name: 'Joseph Joestar',
+    email: 'joseph@joestar.com',
     password: 'password',
-    icon: '/Users/rem/IdeaProjects/prof_app/frontend/public/images/01.png'
 )
 
 # 他のサンプルデータを追加する場合はここに追加してください
