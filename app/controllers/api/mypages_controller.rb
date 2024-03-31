@@ -3,7 +3,7 @@ class Api::MypagesController < ApplicationController
 
     def show
         @user = current_user
-        @posts = current_user.posts
+        @posts = current_user.posts.order(created_at: :desc) # 新しい順に並び替え
         puts @profile_data
         if @user
             @profile_data = {
