@@ -4,7 +4,7 @@ class Api::PostsController < ApplicationController
 
     # GET /api/posts
     def index
-        posts = Post.all
+        posts = Post.order(created_at: :desc)
         render json: posts.map { |post| post.as_json.merge(created_at: post.created_at.strftime('%B %d, %Y')) }, status: :ok
     end
 
@@ -16,8 +16,6 @@ class Api::PostsController < ApplicationController
     # POST /api/posts
     def create
         logger.debug "Received parameters: #{params.inspect}"
-
-
         # current_userがhas_manyしているpostsのこと => postsテーブルのこと
         post = current_user.posts.new(post_params)
         if post.save
